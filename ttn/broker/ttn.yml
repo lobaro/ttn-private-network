@@ -8,7 +8,7 @@ discovery-address: "discovery.local.thethings.network:1900"
 auth-token: #DISCOVERY_TOKEN_FOR_BROKER
 
 broker:
-  networkserver-address: networkserver.local.thethings.network # needed?
+  networkserver-address: networkserver.local.thethings.network:1903
   server-address-announce: broker.local.thethings.network
   networkserver-cert: /etc/ttn/broker/networkserver.cert
   networkserver-token: #NETWORKSERVER_TOKEN_FOR_BROKER
