@@ -102,4 +102,23 @@ For further Questions or Issues please use the [forum](https://www.thethingsnetw
 
 ## ttnctl
 
-Setup for ttnctl is missing yet. We are planning to add a container for it.
+
+ttnctl also needs to have the discovery server certificate, for that we have to create a `ca.cert` file in `$XDG_DATA_HOME/ttnctl`, `$XDG_CACHE_HOME/ttnctl` or `~/.ttnctl/`
+
+```
+cat discovery/server.cert >> ./ttnctl/.ttnctl/ca.cert
+```
+
+Now you can register your application to your private Handler:
+
+```
+docker-compose run --rm ttnctl applications register
+```
+
+And manage your devices in the same way as you would do on the public community network.
+
+
+
+
+
+
