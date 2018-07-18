@@ -1,0 +1,12 @@
+id: mynetwork-discovery
+tls: true
+key-dir: /etc/ttn/discovery/
+auth-servers:
+  ttn-account-v2: "https://account.thethingsnetwork.org"
+  local: "file:///etc/ttn/discovery/server.pub"
+
+discovery:
+  master-auth-servers:
+  - ttn-account-v2
+  - local
+  redis-address: redis:6379

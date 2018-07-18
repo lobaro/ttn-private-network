@@ -1,0 +1,15 @@
+id: mynetwork-handler
+tls: true
+key-dir: /etc/ttn/handler/
+auth-servers:
+  ttn-account-v2: "https://account.thethingsnetwork.org"
+
+discovery-address: "discovery.local.thethings.network:1900"
+auth-token: #DISCOVERY_TOKEN_FOR_HANDLER
+
+handler:
+  server-address-announce: handler.local.thethings.network 
+  broker-id: poscrtl-broker
+  mqtt-address: mosquitto:1883
+  amqp-address: mosquitto:1883 # port correct? needed? not tested and currently disabled in bridge
+  redis-address: redis:6379

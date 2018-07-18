@@ -1,0 +1,124 @@
+version: '3'
+
+services:
+  redis:
+    image: redis
+    command: redis-server --appendonly yes
+    hostname: redis
+    ports:
+      - "6379:6379" # Note: you should not expose this port in production environments
+    volumes:
+      - /data
+  mosquitto:
+    image: eclipse-mosquitto
+    restart: always
+    #deploy:
+    #  resources:
+    #    limits:
+    #      memory: 64m
+    ports:
+      - "1883:1883"  # Note: your MQTT broker should use authentication in production environments
+      - "9001:9001"  # Note: you should not expose this port in production environments
+    environment:
+      MQTTNAUTH_CACHE_HOST: redis
+  ttn: #a utility service for TTN
+    image: thethingsnetwork/ttn:latest
+    #command: tail -f /dev/null
+    #entrypoint: tail -f /dev/null
+    volumes:
+      - "./discovery:/etc/ttn/discovery"
+      - "./router:/etc/ttn/router"
+      - "./broker:/etc/ttn/broker"
+      - "./networkserver:/etc/ttn/networkserver"
+      - "./handler:/etc/ttn/handler"
+  discovery:
+    image: thethingsnetwork/ttn:latest
+    restart: always
+    command: discovery --config /etc/ttn/discovery/ttn.yml
+    depends_on:
+      - redis
+    networks:
+      default:
+        aliases:
+          - discovery.local.thethings.network
+    ports:
+      - "1900:1900"
+      - "8080:8080"
+    volumes:
+      - "./discovery:/etc/ttn/discovery"
+  router:
+    image: thethingsnetwork/ttn:latest
+    restart: always
+    command: router --config /etc/ttn/router/ttn.yml
+    depends_on:
+      - discovery
+    networks:
+      default:
+        aliases:
+          - router.local.thethings.network
+    ports:
+      - "1901:1901"
+    volumes:
+      - "./router:/etc/ttn/router"
+  broker:
+    image: thethingsnetwork/ttn:latest
+    restart: always
+    command: broker --config /etc/ttn/broker/ttn.yml
+    depends_on:
+      - discovery
+      - networkserver
+    networks:
+      default:
+        aliases:
+          - broker.local.thethings.network
+    ports:
+      - "1902:1902"
+    volumes:
+      - "./broker:/etc/ttn/broker"
+  networkserver:
+    image: thethingsnetwork/ttn:latest
+    restart: always
+    command: networkserver --config /etc/ttn/networkserver/ttn.yml
+    depends_on:
+      - redis
+    networks:
+      default:
+        aliases:
+          - networkserver.local.thethings.network
+    ports:
+      - "1903:1903" # Note: you should not expose this port in production environments
+    volumes:
+      - "./networkserver:/etc/ttn/networkserver"
+  handler:
+    image: thethingsnetwork/ttn:latest
+    restart: always
+    command: handler --config /etc/ttn/handler/ttn.yml
+    depends_on:
+      - discovery
+      - redis
+      #- rabbitmq #TODO: what about rabbitmq?
+    networks:
+      default:
+        aliases:
+          - handler.local.thethings.network
+    ports:
+      - "1904:1904"
+      - "8084:8084"
+    volumes:
+      - "./handler:/etc/ttn/handler"
+  bridge:
+    image: thethingsnetwork/gateway-connector-bridge:latest
+    restart: always
+    depends_on:
+      - router
+    environment:
+      BRIDGE_TTN_DISCOVERY_SERVER: discovery.local.thethings.network:1900
+      BRIDGE_ROOT_CA_FILE: /etc/ttn/bridge/ca.cert
+      BRIDGE_TTN_ROUTER: poscrtl-router
+      BRIDGE_REDIS_ADDRESS: redis:6379
+      BRIDGE_MQTT: mosquitto:1883
+      BRIDGE_AQMP: disable
+    ports:
+      - "1700:1700/udp"
+    volumes:
+      - "./bridge:/etc/ttn/bridge"

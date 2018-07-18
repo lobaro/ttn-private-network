@@ -1,0 +1,7 @@
+id: mynetwork-networkserver
+tls: true
+key-dir: /etc/ttn/networkserver/
+auth-servers:
+  ttn-account-v2: "https://account.thethingsnetwork.org"
+networkserver:
+  redis-address: redis:6379

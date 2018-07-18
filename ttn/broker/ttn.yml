@@ -1,0 +1,14 @@
+id: mynetwork-broker
+tls: true
+key-dir: /etc/ttn/broker/
+auth-servers:
+  ttn-account-v2: "https://account.thethingsnetwork.org"
+
+discovery-address: "discovery.local.thethings.network:1900"
+auth-token: #DISCOVERY_TOKEN_FOR_BROKER
+
+broker:
+  networkserver-address: networkserver.local.thethings.network # needed?
+  server-address-announce: broker.local.thethings.network
+  networkserver-cert: /etc/ttn/broker/networkserver.cert
+  networkserver-token: #NETWORKSERVER_TOKEN_FOR_BROKER
