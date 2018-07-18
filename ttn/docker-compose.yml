@@ -31,7 +31,7 @@ services:
       - "./broker:/etc/ttn/broker"
       - "./networkserver:/etc/ttn/networkserver"
       - "./handler:/etc/ttn/handler"
-  ttnctl: #a utility service for TTN
+  ttnctl: # use with: docker-compose run --rm ttnctl help
     build: ./ttnctl
     volumes:
       - "./discovery:/etc/ttn/discovery"
@@ -42,12 +42,11 @@ services:
       - "./ttnctl:/root" 
      #- "./ttnctl/.ttnctl.yml:/root/.ttnctl.yml"
     environment:
-      TTNCTL_DEBUG: 'true'
       TTNCTL_DISCOVERY_ADDRESS: discovery.local.thethings.network:1900
       TTNCTL_AUTH_SERVER: https://account.thethingsnetwork.org
       TTNCTL_MQTT_ADDRESS: mosquitto:1883
-      TTNCTL_ROUTER_ID: posctrl-router
-      TTNCTL_HANDLER_ID: posctrl-handler
+      TTNCTL_ROUTER_ID: mynetwork-router
+      TTNCTL_HANDLER_ID: mynetwork-handler
   discovery:
     image: thethingsnetwork/ttn:latest
     restart: always
