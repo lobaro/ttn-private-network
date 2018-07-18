@@ -11,5 +11,5 @@ handler:
   server-address-announce: handler.local.thethings.network 
   broker-id: poscrtl-broker
   mqtt-address: mosquitto:1883
-  amqp-address: mosquitto:1883 # port correct? needed? not tested and currently disabled in bridge
+#  amqp-address: mosquitto:1883 # AMQP is disabled and not used!
   redis-address: redis:6379
