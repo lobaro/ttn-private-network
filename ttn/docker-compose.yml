@@ -134,7 +134,7 @@ services:
       BRIDGE_REDIS_ADDRESS: redis:6379
       BRIDGE_MQTT: mosquitto:1883
       BRIDGE_AQMP: disable
-      BRIDGE_UDP: 1700
+      BRIDGE_UDP: :1700
     ports:
       - "1700:1700/udp"
     volumes:
