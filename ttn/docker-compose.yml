@@ -3,7 +3,7 @@ version: '3'
 services:
   redis:
     image: redis
-    command: redis-server --appendonly yes
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
     hostname: redis
     ports:
       - "6379:6379" # Note: you should not expose this port in production environments
