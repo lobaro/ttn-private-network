@@ -130,7 +130,7 @@ services:
     environment:
       BRIDGE_TTN_DISCOVERY_SERVER: discovery.local.thethings.network:1900
       BRIDGE_ROOT_CA_FILE: /etc/ttn/bridge/ca.cert
-      BRIDGE_TTN_ROUTER: mynetwork-router
+      BRIDGE_TTN_ROUTER: discovery.local.thethings.network:1900/mynetwork-router
       BRIDGE_REDIS_ADDRESS: redis:6379
       BRIDGE_MQTT: mosquitto:1883
       BRIDGE_AQMP: disable
