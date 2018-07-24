@@ -81,7 +81,7 @@ Just as in [this guide](https://www.thethingsnetwork.org/article/setting-up-a-pr
 > Now we will tell the discovery server which `DevAddr` prefix we will handle with this Broker. In this case, we use a prefix that TTN reserved for private networks: `26000000/20`. This prefix allows you to issue 4096 distinct addresses to devices in your private network, which should be more than enough (remember that device addresses are not unique; you can easily give 100 devices the exact same address). If you need a larger address space, you should file a request with The Things Network Foundation. If you are setting up a large network, you might have to apply for your own NetID from the LoRa Alliance, which will give you your own prefix.
 
 ```
-docker-compose run broker broker register-prefix 26000000/20 --config /etc/ttn/broker/ttn.yml
+docker-compose run --rm broker broker register-prefix 26000000/20 --config /etc/ttn/broker/ttn.yml
 ```
 
 ## Startup everything
