@@ -149,6 +149,11 @@ password_file /mosquitto/config/passwords
 
 Restart the docker container: `docker-compose restart mosquitto`
 
-You can also add users for all other MQTT clients, app level authentication is not enabled yet (looking for hints how to realize that).
+You can also add users for other MQTT clients.
+
+**TODO**
+
+* app level authentication is not enabled yet (looking for hints how to realize that).
+* all users are able to publish to all topics
 
 
