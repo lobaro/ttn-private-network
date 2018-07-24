@@ -117,6 +117,17 @@ docker-compose run --rm ttnctl applications register
 
 And manage your devices in the same way as you would do on the public community network.
 
+# Security
+
+### Redis
+Redis should be run in a local context. For a production environment you should remove the `redis` ports from the `docker-compose.yml`
+
+```
+ ports:
+      - "6379:6379" # Note: you should not expose this port in production environments
+```
+
+The redis password is configured in the `.env` file and used to configure all TTN services. Change the password for your environment!
 
 
 
