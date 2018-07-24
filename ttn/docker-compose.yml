@@ -131,6 +131,8 @@ services:
       - "./handler:/etc/ttn/handler"
     environment:
       TTN_HANDLER_REDIS_PASSWORD: ${REDIS_PASSWORD}
+      TTN_HANDLER_MQTT_USERNAME: ${MQTT_USERNAME}
+      TTN_HANDLER_MQTT_PASSWORD: ${MQTT_PASSWORD}
   bridge:
     image: thethingsnetwork/gateway-connector-bridge:latest
     restart: always
