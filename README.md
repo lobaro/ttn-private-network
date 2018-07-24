@@ -119,7 +119,7 @@ And manage your devices in the same way as you would do on the public community 
 
 # Security
 
-### Redis
+## Redis
 Redis should be run in a local context. For a production environment you should remove the `redis` ports from the `docker-compose.yml`
 
 ```
@@ -129,7 +129,26 @@ Redis should be run in a local context. For a production environment you should 
 
 The redis password is configured in the `.env` file and used to configure all TTN services. Change the password for your environment!
 
+## Mosquitto (MQTT)
 
+Add `MQTT_USERNAME` and `MQTT_PASSWORD` to `.env` to configure the services.
 
+First create the passwords file using the `mosquitto_passwd` tool inside the mosquitto docker container:
+
+```
+docker-compose run --rm mosquitto mosquitto_passwd -b /mosquitto/config/passwords <username> <password>
+```
+
+You should now have the username and the encrypted password in `mosquitto/config/passwords`
+
+Now update the Mosquitto config to support authentication in `mosquitto/config/mosquitto.conf`:
+```
+allow_anonymous false
+password_file /mosquitto/config/passwords
+```
+
+Restart the docker container: `docker-compose restart mosquitto`
+
+You can also add users for all other MQTT clients, app level authentication is not enabled yet (looking for hin'ts how to realize that).
 
 
