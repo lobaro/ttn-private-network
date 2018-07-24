@@ -8,7 +8,7 @@ services:
     ports:
       - "6379:6379" # Note: you should not expose this port in production environments
     volumes:
-      - /data
+      - ./redis/data:/data
   mosquitto:
     image: eclipse-mosquitto
     restart: always
@@ -19,6 +19,9 @@ services:
     ports:
       - "1883:1883"  # Note: your MQTT broker should use authentication in production environments
       - "9001:9001"  # Note: you should not expose this port in production environments
+    volumes:
+      - "./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf"
+      - "./mosquitto/data:/mosquitto/data"
     environment:
       MQTTNAUTH_CACHE_HOST: redis
   ttn: #a utility service for TTN
