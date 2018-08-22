@@ -48,7 +48,7 @@ cat discovery/server.cert > broker/ca.cert
 cat discovery/server.cert > handler/ca.cert
 cat discovery/server.cert > bridge/ca.cert
 cat networkserver/server.cert > broker/networkserver.cert
-cat discovery/server.cert > ~/.ttnctl/ca.cert
+cat discovery/server.cert > ttnctl/ca.cert
 ```
 
 	
